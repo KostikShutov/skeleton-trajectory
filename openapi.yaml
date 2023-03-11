@@ -1,0 +1,152 @@
+openapi: 3.0.0
+info:
+  title: Generator API
+  description: Generator API
+  version: 1.0.0
+paths:
+  /init:
+    post:
+      summary: Init
+      description: Get config and split coordinates
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                config:
+                  type: object
+                  properties:
+                    length:
+                      type: number
+                      format: float
+                      example: 2.8
+                    yaw:
+                      type: number
+                      format: float
+                      example: 30.5
+                  required:
+                    - length
+                    - yaw
+                fragments:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      x:
+                        type: number
+                        format: float
+                      y:
+                        type: number
+                        format: float
+                    required:
+                      - x
+                      - y
+                  example:
+                    - x: 1.2
+                      y: 3.4
+                    - x: 5.6
+                      y: 7.8
+                    - x: 9.10
+                      y: 11.12
+                    - x: 13.14
+                      y: 15.16
+                    - x: 17.18
+                      y: 19.20
+                    - x: 21.22
+                      y: 23.24
+              required:
+                - config
+                - fragments
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      x:
+                        type: number
+                        format: float
+                      y:
+                        type: number
+                        format: float
+                    required:
+                      - x
+                      - y
+                example:
+                  - - { "x": 2.82, "y": 2.84 }
+                    - { "x": 5.69, "y": 5.62 }
+                  - - { "x": 2.87, "y": 2.78 }
+                    - { "x": 5.76, "y": 5.55 }
+                  - - { "x": 2.89, "y": 2.77 }
+                    - { "x": 5.72, "y": 5.6 }
+                  - - { "x": 2.83, "y": 2.83 }
+                    - { "x": 5.65, "y": 5.66 }
+                  - - { "x": 2.82, "y": 2.83 }
+                    - { "x": 5.65, "y": 5.66 }
+                  - - { "x": 2.83, "y": 2.83 }
+                    - { "x": 5.66, "y": 5.66 }
+  /generate:
+    post:
+      summary: Generate
+      description: Generate command
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                coordinates:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      x:
+                        type: number
+                        format: float
+                      y:
+                        type: number
+                        format: float
+                    required:
+                      - x
+                      - y
+                yaw:
+                  type: number
+                  format: float
+              required:
+                - coordinates
+                - yaw
+              example:
+                coordinates:
+                  - { "x": 2.82, "y": 2.84 }
+                  - { "x": 5.69, "y": 5.62 }
+                yaw: 23.0
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  steering:
+                    type: number
+                    format: float
+                  speed:
+                    type: number
+                    format: float
+                  duration:
+                    type: number
+                    format: float
+              example:
+                steering: -50.77
+                speed: 0.86
+                duration: 1.0
