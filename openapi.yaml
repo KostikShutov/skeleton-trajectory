@@ -121,6 +121,8 @@ paths:
                 yaw:
                   type: number
                   format: float
+                model:
+                  type: string
               required:
                 - coordinates
                 - yaw
@@ -129,6 +131,7 @@ paths:
                   - { "x": 2.82, "y": 2.84 }
                   - { "x": 5.69, "y": 5.62 }
                 yaw: 23.0
+                model: normal
       responses:
         '200':
           description: Success

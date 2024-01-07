@@ -7,24 +7,28 @@ from components.part.PartParser import PartParser
 
 class PartParserTest(unittest.TestCase):
     def setUp(self) -> None:
-        self.partParser = PartParser(CoordinateParser())
+        self.partParser = PartParser(
+            coordinateParser=CoordinateParser(),
+        )
 
     def testParse(self) -> None:
-        actual: Part = self.partParser.parse({
+        actualPart, actualModelName = self.partParser.parse({
             'coordinates': [],
-            'yaw': 33.5
+            'yaw': 33.5,
         })
         self.assertEqual(Part(
             coordinates=[],
             yaw=33.5,
-        ), actual)
+        ), actualPart)
+        self.assertEqual('normal', actualModelName)
 
-        actual: Part = self.partParser.parse({
+        actualPart, actualModelName = self.partParser.parse({
             'coordinates': [
                 {'x': 1.2, 'y': 3.4},
                 {'x': 5.6, 'y': 7.8},
             ],
-            'yaw': 33.5
+            'yaw': 33.5,
+            'model': 'aggressive',
         })
         self.assertEqual(Part(
             coordinates=[
@@ -32,4 +36,5 @@ class PartParserTest(unittest.TestCase):
                 Coordinate(x=5.6, y=7.8),
             ],
             yaw=33.5,
-        ), actual)
+        ), actualPart)
+        self.assertEqual('aggressive', actualModelName)

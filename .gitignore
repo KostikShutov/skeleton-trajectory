@@ -4,3 +4,4 @@
 logs
 *.local
 model/*/*.json
+!model/*/model.json

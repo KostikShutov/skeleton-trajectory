@@ -65,7 +65,7 @@ def openapi():
 @app.route('/init', methods=['POST'])
 @cross_origin()
 def init():
-    data = request.get_json(force=True, silent=True)
+    data: any = request.get_json(force=True, silent=True)
     coordinates = coordinateParser.parse(data)
 
     return initService.init(coordinates)
@@ -74,10 +74,10 @@ def init():
 @app.route('/generate', methods=['POST'])
 @cross_origin()
 def generate():
-    data = request.get_json(force=True, silent=True)
-    part = partParser.parse(data)
+    data: any = request.get_json(force=True, silent=True)
+    part, modelName = partParser.parse(data)
 
-    return predictService.predict(part)
+    return predictService.predict(part=part, modelName=modelName)
 
 
 if __name__ == '__main__':

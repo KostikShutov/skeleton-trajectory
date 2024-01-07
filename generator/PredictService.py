@@ -14,7 +14,7 @@ class PredictService:
         self.partTransformer = partTransformer
         self.coordinateTransformer = coordinateTransformer
 
-    def predict(self, part: Part, modelName: str = 'default') -> object:
+    def predict(self, part: Part, modelName: str) -> object:
         modelDirectory: str = 'model/' + modelName + '/'
         command: Command = self.__doPredict(part, modelDirectory)
 
