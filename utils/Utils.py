@@ -24,7 +24,7 @@ def strToBool(value: str) -> bool:
 
 def parseArgs() -> any:
     parser = argparse.ArgumentParser()
-    parser.add_argument('-m', '--model', type=str, default=ModelName.NORMAL)
+    parser.add_argument('-m', '--model', type=str, default=ModelName.NORMAL.value)
     parser.add_argument('-f', '--file', type=str, default='train')
     parser.add_argument('-n', '--number', type=int, default=1_000_000)
     parser.add_argument('-s', '--side', type=int, default=1)

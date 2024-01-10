@@ -1,3 +1,4 @@
+import os
 import math
 import json
 import random
@@ -94,15 +95,15 @@ def main() -> None:
     number: int = args.number
     modelName: str = args.model
     modelDirectory: str = 'model/' + modelName + '/'
-    modelFile: str = args.file
+    modelFile: str = modelDirectory + args.file + '.json'
+
+    print('---Running ' + os.path.basename(__file__) + '---')
+    print('Model file: ' + modelFile)
+    print('Number: ' + str(number))
 
     trajectory: list[object] = generateTrajectory(modelName=modelName, number=number)
     createDirectory(directory=modelDirectory)
-
-    saveTrajectory(
-        path=modelDirectory + modelFile + '.json',
-        trajectory=trajectory,
-    )
+    saveTrajectory(path=modelFile, trajectory=trajectory)
 
 
 if __name__ == '__main__':

@@ -1,10 +1,9 @@
-import math
+import os
 import json
 import matplotlib.pyplot as plt
 from collections.abc import Iterable
 from components.config.Config import Config
 from components.coordinate.Coordinate import Coordinate
-from components.coordinate.State import State
 from utils.Utils import parseArgs
 from json.decoder import JSONDecodeError
 
@@ -85,10 +84,15 @@ def showPlot() -> None:
 def main() -> None:
     args: any = parseArgs()
     modelDirectory: str = 'model/' + args.model + '/'
-    modelFile: str = args.file
+    realModelFile: str = modelDirectory + args.file + '.json'
+    predictedModelFile: str = modelDirectory + args.file + '.predict.json'
 
-    addRealPlot(path=modelDirectory + modelFile + '.json')
-    addPredictedPlot(path=modelDirectory + modelFile + '.predict.json')
+    print('---Running ' + os.path.basename(__file__) + '---')
+    print('Real model file: ' + realModelFile)
+    print('Predicted model file: ' + predictedModelFile)
+
+    addRealPlot(path=realModelFile)
+    addPredictedPlot(path=predictedModelFile)
     showPlot()
 
 

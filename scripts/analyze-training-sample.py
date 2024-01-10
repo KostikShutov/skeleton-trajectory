@@ -1,3 +1,4 @@
+import os
 import json
 from tqdm import tqdm
 from collections import Counter
@@ -91,10 +92,14 @@ def printStatistics(items: list[tuple[Part, Command]]) -> None:
 
 def main() -> None:
     args: any = parseArgs()
-    modelDirectory: str = 'model/' + args.model + '/'
-    modelFile: str = args.file
+    modelName: str = args.model
+    modelDirectory: str = 'model/' + modelName + '/'
+    modelFile: str = modelDirectory + args.file + '.json'
 
-    with open(modelDirectory + modelFile + '.json') as file:
+    print('---Running ' + os.path.basename(__file__) + '---')
+    print('Model file: ' + modelFile)
+
+    with open(modelFile) as file:
         course: Iterable = json.load(file)
         course: list[Coordinate] = getCoordinateParser().parse(course)
 

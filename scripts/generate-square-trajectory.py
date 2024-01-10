@@ -1,3 +1,4 @@
+import os
 import json
 from components.coordinate.Coordinate import Coordinate
 from utils.Utils import createDirectory, parseArgs
@@ -68,17 +69,18 @@ def saveTrajectory(path: str, trajectory: list[object]) -> None:
 def main() -> None:
     args: any = parseArgs()
     modelDirectory: str = 'model/' + args.model + '/'
-    modelFile: str = args.file
-    side: float = float(args.side)
+    modelFile: str = modelDirectory + args.file + '.json'
+    side: int = args.side
     points: int = args.points
 
-    trajectory: list[object] = generateTrajectory(min=0.0, max=side, points=points)
-    createDirectory(directory=modelDirectory)
+    print('---Running ' + os.path.basename(__file__) + '---')
+    print('Model file: ' + modelFile)
+    print('Side: ' + str(side))
+    print('Points: ' + str(points))
 
-    saveTrajectory(
-        path=modelDirectory + modelFile + '.json',
-        trajectory=trajectory,
-    )
+    trajectory: list[object] = generateTrajectory(min=0.0, max=float(side), points=points)
+    createDirectory(directory=modelDirectory)
+    saveTrajectory(path=modelFile, trajectory=trajectory)
 
 
 if __name__ == '__main__':
