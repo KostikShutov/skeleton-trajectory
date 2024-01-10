@@ -5,6 +5,7 @@ import matplotlib
 from utils.Logger import Logger
 from flask import Flask, request, render_template
 from flask_cors import CORS, cross_origin
+from components.coordinate.Coordinate import Coordinate
 from components.coordinate.CoordinateParser import CoordinateParser
 from components.coordinate.CoordinateTransformer import CoordinateTransformer
 from components.part.PartParser import PartParser
@@ -16,8 +17,8 @@ from utils.Env import env
 Logger('generator')
 matplotlib.use('Agg')
 
-app = Flask(__name__, template_folder=os.getcwd())
-cors = CORS(app)
+app: Flask = Flask(__name__, template_folder=os.getcwd())
+cors: CORS = CORS(app)
 
 
 def getCoordinateParser() -> CoordinateParser:
@@ -37,12 +38,9 @@ def getPartParser() -> PartParser:
 
 
 def getPredictService() -> PredictService:
-    partTransformer = PartTransformer()
-    coordinateTransformer = CoordinateTransformer()
-
     return PredictService(
-        partTransformer=partTransformer,
-        coordinateTransformer=coordinateTransformer,
+        partTransformer=PartTransformer(),
+        coordinateTransformer=CoordinateTransformer(),
     )
 
 
@@ -66,19 +64,19 @@ def openapi():
 @cross_origin()
 def init():
     data: any = request.get_json(force=True, silent=True)
-    coordinates = coordinateParser.parse(data)
+    coordinates: list[Coordinate] = coordinateParser.parse(data=data)
 
-    return initService.init(coordinates)
+    return initService.init(course=coordinates)
 
 
 @app.route('/generate', methods=['POST'])
 @cross_origin()
 def generate():
     data: any = request.get_json(force=True, silent=True)
-    part, modelName = partParser.parse(data)
+    part, modelName = partParser.parse(data=data)
 
     return predictService.predict(part=part, modelName=modelName)
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=int(env['SERVER_PORT']))
+    app.run(host='0.0.0.0', port=int(env['SERVER_PORT']))

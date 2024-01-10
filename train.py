@@ -13,16 +13,12 @@ Logger('train')
 
 
 def getTrainService() -> TrainService:
-    commandTransformer = CommandTransformer()
-    partTransformer = PartTransformer()
-    coordinateTransformer = CoordinateTransformer()
-
     return TrainService(
         coordinateParser=CoordinateParser(),
         trainHelper=TrainHelper(
-            coordinateTransformer=coordinateTransformer,
-            commandTransformer=commandTransformer,
-            partTransformer=partTransformer,
+            coordinateTransformer=CoordinateTransformer(),
+            commandTransformer=CommandTransformer(),
+            partTransformer=PartTransformer(),
         ),
     )
 
