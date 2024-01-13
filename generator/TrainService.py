@@ -16,7 +16,6 @@ from components.coordinate.CoordinateParser import CoordinateParser
 from components.part.Part import Part
 from components.model.Model import Model
 from generator.TrainHelper import TrainHelper
-from utils.Logger import Logger
 
 
 class TrainService:
@@ -35,7 +34,7 @@ class TrainService:
         items: list[tuple[Part, Command]] = self.trainHelper.createTrainingItems(course)
         trainX, trainY = self.trainHelper.presentTrainingItems(items)
 
-        tensorboardDir: str = Logger.DIR + '/tensorboard/' + datetime.now().strftime('%Y-%m-%d_%H:%M:%S.%f')
+        tensorboardDir: str = 'tensorboard/' + datetime.now().strftime('%Y-%m-%d_%H:%M:%S.%f')
         tensorboardCallback: any = tf.keras.callbacks.TensorBoard(log_dir=tensorboardDir, histogram_freq=1)
         earlyStopping: EarlyStopping = EarlyStopping(patience=3)
 

@@ -32,7 +32,7 @@ train:
 
 .PHONY: tensorboard
 tensorboard:
-	docker compose run --rm -p 3002:6006 -w /code python-generator tensorboard --logdir logs/tensorboard --bind_all
+	docker compose run --rm -p 3002:6006 -w /code python-generator tensorboard --logdir tensorboard --bind_all
 
 .PHONY: clear
 clear:

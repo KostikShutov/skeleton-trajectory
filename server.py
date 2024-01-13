@@ -2,7 +2,6 @@
 
 import os
 import matplotlib
-from utils.Logger import Logger
 from flask import Flask, request, render_template
 from flask_cors import CORS, cross_origin
 from components.coordinate.Coordinate import Coordinate
@@ -14,7 +13,6 @@ from generator.InitService import InitService
 from generator.PredictService import PredictService
 from utils.Env import env
 
-Logger('generator')
 matplotlib.use('Agg')
 
 app: Flask = Flask(__name__, template_folder=os.getcwd())
