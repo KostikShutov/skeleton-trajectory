@@ -1,6 +1,7 @@
 import os
 import argparse
 from components.model.ModelName import ModelName
+from components.config.Config import Config
 
 
 def createDirectory(directory: str) -> None:
@@ -29,5 +30,6 @@ def parseArgs() -> any:
     parser.add_argument('-n', '--number', type=int, default=1_000_000)
     parser.add_argument('-d', '--distance', type=int, default=1)
     parser.add_argument('-p', '--points', type=int, default=2)
+    parser.add_argument('-s', '--speed', type=float, default=Config.SPEED)
 
     return parser.parse_args()

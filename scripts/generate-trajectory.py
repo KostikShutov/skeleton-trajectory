@@ -9,10 +9,9 @@ from utils.Utils import createDirectory, parseArgs
 from utils.Math import normalizeAngle
 
 
-def generateTrajectory(modelName: str, number: int) -> list[object]:
+def generateTrajectory(modelName: str, speed: float, number: int) -> list[object]:
     x: float = 0.0  # [m]
     y: float = 0.0  # [m]
-    speed: float = Config.SPEED  # [m/s]
     length: float = Config.LENGTH  # [m]
     yaw: float = math.radians(0.0)  # [rad]
     steering: float = generateSteering(modelName=modelName)  # [rad]
@@ -48,7 +47,7 @@ def generateTrajectory(modelName: str, number: int) -> list[object]:
 
 
 def modifyCoordinate(modelName: str, x: float, y: float, speed: float, yaw: float) -> tuple[float, float]:
-    if modelName == ModelName.NORMAL.value:
+    if modelName in [ModelName.NORMAL.value, ModelName.PRACTICE.value]:
         return x, y
 
     if modelName == ModelName.AGGRESSIVE.value:
@@ -62,7 +61,7 @@ def modifyCoordinate(modelName: str, x: float, y: float, speed: float, yaw: floa
 
 
 def generateSteering(modelName: str) -> float:
-    if modelName == ModelName.NORMAL.value:
+    if modelName in [ModelName.NORMAL.value, ModelName.PRACTICE.value]:
         return math.radians(float(random.randint(-45, 45)))
 
     if modelName == ModelName.AGGRESSIVE.value:
@@ -75,7 +74,7 @@ def generateSteering(modelName: str) -> float:
 
 
 def generatePoints(modelName: str) -> int:
-    if modelName == ModelName.NORMAL.value:
+    if modelName in [ModelName.NORMAL.value, ModelName.PRACTICE.value]:
         return random.randint(10, 40)
 
     if modelName == ModelName.AGGRESSIVE.value:
@@ -92,6 +91,7 @@ def saveTrajectory(path: str, trajectory: list[object]) -> None:
 
 def main() -> None:
     args: any = parseArgs()
+    speed: float = args.speed
     number: int = args.number
     modelName: str = args.model
     modelDirectory: str = 'model/' + modelName + '/'
@@ -99,9 +99,10 @@ def main() -> None:
 
     print('---Running ' + os.path.basename(__file__) + '---')
     print('Model file: ' + modelFile)
+    print('Speed: ' + str(speed))
     print('Number: ' + str(number))
 
-    trajectory: list[object] = generateTrajectory(modelName=modelName, number=number)
+    trajectory: list[object] = generateTrajectory(modelName=modelName, speed=speed, number=number)
     createDirectory(directory=modelDirectory)
     saveTrajectory(path=modelFile, trajectory=trajectory)
 
