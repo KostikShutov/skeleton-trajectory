@@ -27,7 +27,7 @@ def parseArgs() -> any:
     parser.add_argument('-m', '--model', type=str, default=ModelName.NORMAL.value)
     parser.add_argument('-f', '--file', type=str, default='train')
     parser.add_argument('-n', '--number', type=int, default=1_000_000)
-    parser.add_argument('-s', '--side', type=int, default=1)
+    parser.add_argument('-d', '--distance', type=int, default=1)
     parser.add_argument('-p', '--points', type=int, default=2)
 
     return parser.parse_args()

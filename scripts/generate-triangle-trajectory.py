@@ -5,8 +5,9 @@ from components.coordinate.Coordinate import Coordinate
 from utils.Utils import createDirectory, parseArgs
 
 
-def generateTrajectory(min: float, max: float, points: int) -> list[object]:
-    side: float = max - min
+def generateTrajectory(distance: float, points: int) -> list[object]:
+    min: float = 0.0
+    max: float = distance
     result: list[object] = []
 
     for c in interpolatePoints(
@@ -21,7 +22,7 @@ def generateTrajectory(min: float, max: float, points: int) -> list[object]:
 
     for c in interpolatePoints(
             c1=Coordinate(x=max, y=min),
-            c2=Coordinate(x=side / 2, y=math.sqrt(3) * side / 2),
+            c2=Coordinate(x=distance / 2, y=math.sqrt(3) * distance / 2),
             points=points,
     )[:-1]:
         result.append({
@@ -30,7 +31,7 @@ def generateTrajectory(min: float, max: float, points: int) -> list[object]:
         })
 
     for c in interpolatePoints(
-            c1=Coordinate(x=side / 2, y=math.sqrt(3) * side / 2),
+            c1=Coordinate(x=distance / 2, y=math.sqrt(3) * distance / 2),
             c2=Coordinate(x=min, y=min),
             points=points,
     ):
@@ -62,15 +63,15 @@ def main() -> None:
     args: any = parseArgs()
     modelDirectory: str = 'model/' + args.model + '/'
     modelFile: str = modelDirectory + args.file + '.json'
-    side: int = args.side
+    distance: int = args.distance
     points: int = args.points
 
     print('---Running ' + os.path.basename(__file__) + '---')
     print('Model file: ' + modelFile)
-    print('Side: ' + str(side))
+    print('Distance: ' + str(distance))
     print('Points: ' + str(points))
 
-    trajectory: list[object] = generateTrajectory(min=0.0, max=float(side), points=points)
+    trajectory: list[object] = generateTrajectory(distance=float(distance), points=points)
     createDirectory(directory=modelDirectory)
     saveTrajectory(path=modelFile, trajectory=trajectory)
 

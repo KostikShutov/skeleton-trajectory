@@ -7,7 +7,7 @@ from components.part.PartTransformer import PartTransformer
 from utils.Utils import createDirectory, parseArgs
 
 
-def generateTrajectory(side: float, points: int) -> list[object]:
+def generateTrajectory(distance: float, points: int) -> list[object]:
     coordinates: list[Coordinate] = []
     newCoordinates: list[Coordinate] = []
     result: list[object] = [{
@@ -17,8 +17,8 @@ def generateTrajectory(side: float, points: int) -> list[object]:
 
     for i in (4, 5, 0, 1, 2, 3):
         coordinates.append(Coordinate(
-            x=side * math.cos(2 * math.pi * i / 6),
-            y=side * math.sin(2 * math.pi * i / 6),
+            x=distance * math.cos(2 * math.pi * i / 6),
+            y=distance * math.sin(2 * math.pi * i / 6),
         ))
 
     for i in range(len(coordinates) - 1):
@@ -65,15 +65,15 @@ def main() -> None:
     args: any = parseArgs()
     modelDirectory: str = 'model/' + args.model + '/'
     modelFile: str = modelDirectory + args.file + '.json'
-    side: int = args.side
+    distance: int = args.distance
     points: int = args.points
 
     print('---Running ' + os.path.basename(__file__) + '---')
     print('Model file: ' + modelFile)
-    print('Side: ' + str(side))
+    print('Distance: ' + str(distance))
     print('Points: ' + str(points))
 
-    trajectory: list[object] = generateTrajectory(side=float(side), points=points)
+    trajectory: list[object] = generateTrajectory(distance=float(distance), points=points)
     createDirectory(directory=modelDirectory)
     saveTrajectory(path=modelFile, trajectory=trajectory)
 
