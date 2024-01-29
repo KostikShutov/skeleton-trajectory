@@ -13,49 +13,32 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                config:
-                  type: object
-                  properties:
-                    length:
-                      type: number
-                      format: float
-                      example: 2.8
-                    yaw:
-                      type: number
-                      format: float
-                      example: 30.5
-                  required:
-                    - length
-                    - yaw
-                fragments:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      x:
-                        type: number
-                        format: float
-                      y:
-                        type: number
-                        format: float
-                    required:
-                      - x
-                      - y
-                  example:
-                    - x: 1.2
-                      y: 3.4
-                    - x: 5.6
-                      y: 7.8
-                    - x: 9.10
-                      y: 11.12
-                    - x: 13.14
-                      y: 15.16
-                    - x: 17.18
-                      y: 19.20
-                    - x: 21.22
-                      y: 23.24
+              type: array
+              items:
+                type: object
+                properties:
+                  x:
+                    type: number
+                    format: float
+                  y:
+                    type: number
+                    format: float
+                required:
+                  - x
+                  - y
+              example:
+                - x: 1.2
+                  y: 3.4
+                - x: 5.6
+                  y: 7.8
+                - x: 9.10
+                  y: 11.12
+                - x: 13.14
+                  y: 15.16
+                - x: 17.18
+                  y: 19.20
+                - x: 21.22
+                  y: 23.24
               required:
                 - config
                 - fragments
@@ -65,34 +48,51 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: array
-                  items:
+                type: object
+                properties:
+                  config:
                     type: object
                     properties:
-                      x:
+                      length:
                         type: number
                         format: float
-                      y:
+                        example: 2.8
+                      yaw:
                         type: number
                         format: float
+                        example: 30.5
                     required:
-                      - x
-                      - y
-                example:
-                  - - { "x": 2.82, "y": 2.84 }
-                    - { "x": 5.69, "y": 5.62 }
-                  - - { "x": 2.87, "y": 2.78 }
-                    - { "x": 5.76, "y": 5.55 }
-                  - - { "x": 2.89, "y": 2.77 }
-                    - { "x": 5.72, "y": 5.6 }
-                  - - { "x": 2.83, "y": 2.83 }
-                    - { "x": 5.65, "y": 5.66 }
-                  - - { "x": 2.82, "y": 2.83 }
-                    - { "x": 5.65, "y": 5.66 }
-                  - - { "x": 2.83, "y": 2.83 }
-                    - { "x": 5.66, "y": 5.66 }
+                      - length
+                      - yaw
+                  fragments:
+                    type: array
+                    items:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          x:
+                            type: number
+                            format: float
+                          y:
+                            type: number
+                            format: float
+                        required:
+                          - x
+                          - y
+                    example:
+                      - - { "x": 2.82, "y": 2.84 }
+                        - { "x": 5.69, "y": 5.62 }
+                      - - { "x": 2.87, "y": 2.78 }
+                        - { "x": 5.76, "y": 5.55 }
+                      - - { "x": 2.89, "y": 2.77 }
+                        - { "x": 5.72, "y": 5.6 }
+                      - - { "x": 2.83, "y": 2.83 }
+                        - { "x": 5.65, "y": 5.66 }
+                      - - { "x": 2.82, "y": 2.83 }
+                        - { "x": 5.65, "y": 5.66 }
+                      - - { "x": 2.83, "y": 2.83 }
+                        - { "x": 5.66, "y": 5.66 }
   /generate:
     post:
       summary: Generate
