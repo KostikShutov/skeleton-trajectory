@@ -10,6 +10,6 @@ pydotplus==2.0.2
 keras_visualizer==3.1.2
 cvxpy==1.4.2
 Pillow==9.5.0
-python-dotenv==1.0.0
+python-dotenv==1.0.1
 tqdm==4.66.1
 visualkeras @ git+https://github.com/paulgavrikov/visualkeras@master
