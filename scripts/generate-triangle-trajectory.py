@@ -2,7 +2,7 @@ import os
 import json
 import math
 from components.coordinate.Coordinate import Coordinate
-from utils.Utils import createDirectory, parseArgs
+from helpers.Utility import createDirectory, parseArgs
 
 
 def generateTrajectory(distance: float, points: int) -> list[object]:

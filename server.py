@@ -11,7 +11,7 @@ from components.part.PartParser import PartParser
 from components.part.PartTransformer import PartTransformer
 from generator.InitService import InitService
 from generator.PredictService import PredictService
-from utils.Env import env
+from helpers.Env import env
 
 matplotlib.use('Agg')
 

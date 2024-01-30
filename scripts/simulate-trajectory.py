@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from collections.abc import Iterable
 from components.config.Config import Config
 from components.coordinate.Coordinate import Coordinate
-from utils.Utils import parseArgs
+from helpers.Utility import parseArgs
 from json.decoder import JSONDecodeError
 
 

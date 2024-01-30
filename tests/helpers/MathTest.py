@@ -1,7 +1,7 @@
 import math
 import unittest
 from components.coordinate.Coordinate import Coordinate
-from utils.Math import distanceBetweenPoints, rotatePoints, normalizeAngle
+from helpers.Math import distanceBetweenPoints, rotatePoints, normalizeAngle
 
 
 class MathTest(unittest.TestCase):

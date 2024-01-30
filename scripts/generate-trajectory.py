@@ -5,8 +5,8 @@ import random
 from tqdm import tqdm
 from components.config.Config import Config
 from components.model.ModelName import ModelName
-from utils.Utils import createDirectory, parseArgs
-from utils.Math import normalizeAngle
+from helpers.Utility import createDirectory, parseArgs
+from helpers.Math import normalizeAngle
 
 
 def generateTrajectory(modelName: str, speed: float, number: int) -> list[object]:

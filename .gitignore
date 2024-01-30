@@ -4,4 +4,3 @@
 tensorboard
 *.local
 model/*/*.json
-!model/*/model.json

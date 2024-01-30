@@ -16,14 +16,23 @@ class PredictService:
 
     def predict(self, part: Part, modelName: str) -> object:
         modelDirectory: str = 'model/' + modelName + '/'
-        command: Command = self.__doPredict(part, modelDirectory)
+        command: Command = self.__getCommand(part, modelDirectory)
 
         return {
             'steering': command.steering,
             'speed': command.speed,
         }
 
-    def __doPredict(self, part: Part, modelDirectory: str) -> Command:
+    def __getCommand(self, part: Part, modelDirectory: str) -> Command:
+        steering: float = self.__doPredict(part, modelDirectory + 'steering/')
+        speed: float = self.__doPredict(part, modelDirectory + 'speed/')
+
+        return Command(
+            steering=max(-45.0, min(45.0, steering)),
+            speed=speed,
+        )
+
+    def __doPredict(self, part: Part, modelDirectory: str) -> float:
         part: Part = self.partTransformer.normalizeToZero(Part(
             coordinates=part.coordinates,
             yaw=part.yaw,
@@ -42,10 +51,7 @@ class PredictService:
         command: list[float] = prediction[0].tolist()
         command: list[float] = yScaler.inverse_transform([command])[0]
 
-        return Command(
-            steering=max(-45.0, min(45.0, command[0])),
-            speed=command[1],
-        )
+        return command[0]
 
     def __loadModel(self, modelDirectory: str) -> Sequential:
         with open(modelDirectory + 'model.json', 'r') as file:

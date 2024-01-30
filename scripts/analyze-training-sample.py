@@ -11,8 +11,8 @@ from components.part.PartTransformer import PartTransformer
 from components.command.Command import Command
 from components.part.Part import Part
 from generator.TrainHelper import TrainHelper
-from utils.Utils import parseArgs
-from utils.Math import distanceBetweenPoints
+from helpers.Utility import parseArgs
+from helpers.Math import distanceBetweenPoints
 
 
 def getCoordinateParser() -> CoordinateParser:
@@ -104,8 +104,8 @@ def main() -> None:
         course: list[Coordinate] = getCoordinateParser().parse(course)
 
     trainHelper: TrainHelper = getTrainHelper()
-    items: list[tuple[Part, Command]] = trainHelper.createTrainingItems(course)
-    trainX, trainY = trainHelper.presentTrainingItems(items)
+    items: list[tuple[Part, Command]] = trainHelper.createItems(course)
+    trainX, trainY = trainHelper.presentCombinedItems(items)
     analyzeTrainingSample(trainX, trainY)
     printStatistics(items)
 

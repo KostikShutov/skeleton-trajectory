@@ -16,7 +16,7 @@ class TrainHelper:
         self.commandTransformer = commandTransformer
         self.partTransformer = partTransformer
 
-    def createTrainingItems(self, course: list[Coordinate]) -> list[tuple[Part, Command]]:
+    def createItems(self, course: list[Coordinate]) -> list[tuple[Part, Command]]:
         result: list[tuple[Part, Command]] = []
         fragments: list[list[Coordinate]] = self.coordinateTransformer.splitInfoFragments(coordinates=course)
 
@@ -40,15 +40,24 @@ class TrainHelper:
 
         return result
 
-    def presentTrainingItems(self, items: list) -> tuple[list[list[float]], list[list[float]]]:
+    def presentCombinedItems(self, items: list) -> tuple[list[list[float]], list[list[float]]]:
         trainX: list[list[float]] = []
         trainY: list[list[float]] = []
 
         for part, command in tqdm(items, desc='Presenting training items'):
-            inputX: list[float] = self.partTransformer.presentForInput(part)
-            outputY: list[float] = self.commandTransformer.presentForOutput(command)
-
-            trainX.append(inputX)
-            trainY.append(outputY)
+            trainX.append(self.partTransformer.presentForInput(part))
+            trainY.append(self.commandTransformer.presentForOutput(command))
 
         return trainX, trainY
+
+    def presentSeparatedItems(self, items: list) -> tuple[list[list[float]], list[list[float]], list[list[float]]]:
+        trainX: list[list[float]] = []
+        trainSteeringY: list[list[float]] = []
+        trainSpeedY: list[list[float]] = []
+
+        for part, command in tqdm(items, desc='Presenting training items'):
+            trainX.append(self.partTransformer.presentForInput(part))
+            trainSteeringY.append([command.steering])
+            trainSpeedY.append([command.speed])
+
+        return trainX, trainSteeringY, trainSpeedY

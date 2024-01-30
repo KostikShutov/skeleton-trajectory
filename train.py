@@ -6,7 +6,7 @@ from components.coordinate.CoordinateTransformer import CoordinateTransformer
 from components.part.PartTransformer import PartTransformer
 from generator.TrainService import TrainService
 from generator.TrainHelper import TrainHelper
-from utils.Utils import parseArgs
+from helpers.Utility import parseArgs
 
 
 def getTrainService() -> TrainService:

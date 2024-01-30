@@ -1,9 +1,8 @@
 import math
-
 from components.coordinate.Coordinate import Coordinate
 from components.part.Part import Part
-from utils.Utils import removeFirst
-from utils.Math import rotatePoints, normalizeAngle
+from helpers.Utility import removeFirst
+from helpers.Math import rotatePoints, normalizeAngle
 
 
 class PartTransformer:

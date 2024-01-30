@@ -16,6 +16,7 @@ from components.coordinate.CoordinateParser import CoordinateParser
 from components.part.Part import Part
 from components.model.Model import Model
 from generator.TrainHelper import TrainHelper
+from helpers.Utility import createDirectory
 
 
 class TrainService:
@@ -31,10 +32,14 @@ class TrainService:
             course: Iterable = json.load(file)
 
         course: list[Coordinate] = self.coordinateParser.parse(course)
-        items: list[tuple[Part, Command]] = self.trainHelper.createTrainingItems(course)
-        trainX, trainY = self.trainHelper.presentTrainingItems(items)
+        items: list[tuple[Part, Command]] = self.trainHelper.createItems(course)
+        trainX, trainSteeringY, trainSpeedY = self.trainHelper.presentSeparatedItems(items)
 
-        tensorboardDir: str = 'tensorboard/' + datetime.now().strftime('%Y-%m-%d_%H:%M:%S.%f')
+        self.__trainModel(trainX, trainSteeringY, modelDirectory + 'steering/')
+        self.__trainModel(trainX, trainSpeedY, modelDirectory + 'speed/')
+
+    def __trainModel(self, trainX: list[list[float]], trainY: list[list[float]], modelDirectory: str) -> None:
+        tensorboardDir: str = 'tensorboard/' + modelDirectory + datetime.now().strftime('%Y-%m-%d_%H:%M:%S.%f')
         tensorboardCallback: any = tf.keras.callbacks.TensorBoard(log_dir=tensorboardDir, histogram_freq=1)
         earlyStopping: EarlyStopping = EarlyStopping(patience=3)
 
@@ -54,6 +59,7 @@ class TrainService:
                     xScaler: MinMaxScaler,
                     yScaler: MinMaxScaler,
                     modelDirectory: str) -> None:
+        createDirectory(modelDirectory)
         json: str = model.to_json()
 
         with open(modelDirectory + 'model.json', 'w') as file:

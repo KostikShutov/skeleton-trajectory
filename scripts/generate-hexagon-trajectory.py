@@ -4,7 +4,7 @@ import math
 from components.coordinate.Coordinate import Coordinate
 from components.part.Part import Part
 from components.part.PartTransformer import PartTransformer
-from utils.Utils import createDirectory, parseArgs
+from helpers.Utility import createDirectory, parseArgs
 
 
 def generateTrajectory(distance: float, points: int) -> list[object]:
