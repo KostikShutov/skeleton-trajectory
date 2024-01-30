@@ -7,7 +7,7 @@ numpy==1.26.3
 matplotlib==3.8.2
 pydot==2.0.0
 pydotplus==2.0.2
-keras_visualizer==3.1.2
+keras_visualizer @ git+https://github.com/KostikShutov/keras-visualizer@master
 cvxpy==1.4.2
 Pillow==9.5.0
 python-dotenv==1.0.1
