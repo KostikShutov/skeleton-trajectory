@@ -2,7 +2,6 @@ import os
 import json
 import matplotlib.pyplot as plt
 from collections.abc import Iterable
-from components.config.Config import Config
 from components.coordinate.Coordinate import Coordinate
 from helpers.Utility import parseArgs
 from json.decoder import JSONDecodeError
@@ -38,7 +37,7 @@ def addRealPlot(path: str) -> None:
         pointsX.append(coordinate.x)
         pointsY.append(coordinate.y)
 
-    plt.plot(pointsX, pointsY, marker='o', markersize=6, color='blue', label='Original', linestyle='')
+    plt.plot(pointsX, pointsY, marker='o', markersize=10, color='blue', linestyle='')
 
 
 def addPredictedPlot(path: str) -> None:
@@ -49,9 +48,6 @@ def addPredictedPlot(path: str) -> None:
 
     predictedPointsX: list[float] = []
     predictedPointsY: list[float] = []
-    trainedPointsX: list[float] = []
-    trainedPointsY: list[float] = []
-    duration: float = 0.0  # [s]
 
     for item in items:
         coordinate: Coordinate = Coordinate(
@@ -61,23 +57,14 @@ def addPredictedPlot(path: str) -> None:
 
         predictedPointsX.append(coordinate.x)
         predictedPointsY.append(coordinate.y)
-        duration += Config.SIMULATE_DURATION
 
-        if round(duration, 1) == Config.GENERATE_DURATION:
-            trainedPointsX.append(coordinate.x)
-            trainedPointsY.append(coordinate.y)
-            duration = 0.0
-
-    plt.plot(predictedPointsX, predictedPointsY, marker='o', markersize=1, color='red', label='Predicted (dt = 0.01)')
-    plt.plot(trainedPointsX, trainedPointsY, marker='o', markersize=1, color='green', label='Points (dT = 0.1)',
-             linestyle='')
+    plt.plot(predictedPointsX, predictedPointsY, marker='o', markersize=1, color='red')
 
 
 def showPlot() -> None:
     plt.xlabel('X')
     plt.ylabel('Y')
     plt.grid(True)
-    plt.legend()
     plt.show()
 
 
