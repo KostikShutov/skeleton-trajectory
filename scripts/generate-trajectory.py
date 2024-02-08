@@ -1,21 +1,22 @@
 import os
 import math
 import json
-import random
 from tqdm import tqdm
 from components.config.Config import Config
-from components.model.ModelName import ModelName
+from components.model.StrategyInterface import StrategyInterface
+from components.model.StrategyResolver import StrategyResolver
 from helpers.Utility import createDirectory, parseArgs
 from helpers.Math import normalizeAngle
 
 
-def generateTrajectory(modelName: str, speed: float, number: int) -> list[object]:
+def generateTrajectory(strategy: StrategyInterface, number: int) -> list[object]:
     x: float = 0.0  # [m]
     y: float = 0.0  # [m]
     length: float = Config.LENGTH  # [m]
     yaw: float = math.radians(0.0)  # [rad]
-    steering: float = generateSteering(modelName=modelName)  # [rad]
-    points: int = generatePoints(modelName=modelName)
+    steering: float = strategy.generateSteering()  # [rad]
+    speed: float = strategy.generateSpeed(steering=steering)  # [m/s]
+    points: int = strategy.generatePoints(speed=speed)
     result: list[object] = [{
         'x': x,
         'y': y,
@@ -26,14 +27,15 @@ def generateTrajectory(modelName: str, speed: float, number: int) -> list[object
 
     for _ in tqdm(range(number), desc='Generating trajectory'):
         for _ in range(points):
-            x += speed * math.cos(yaw) * Config.GENERATE_DURATION  # [m]
-            y += speed * math.sin(yaw) * Config.GENERATE_DURATION  # [m]
-            yaw += math.tan(steering) * (speed / length) * Config.GENERATE_DURATION  # [rad]
+            x += speed * math.cos(yaw) * Config.DURATION  # [m]
+            y += speed * math.sin(yaw) * Config.DURATION  # [m]
+            yaw += math.tan(steering) * (speed / length) * Config.DURATION  # [rad]
             yaw: float = normalizeAngle(yaw)  # [rad]
 
-        x, y = modifyCoordinate(modelName=modelName, x=x, y=y, speed=speed, yaw=yaw)
-        steering: float = generateSteering(modelName=modelName)  # [rad]
-        points: int = generatePoints(modelName=modelName)
+        x, y = strategy.modifyCoordinate(x=x, y=y, yaw=yaw, speed=speed)
+        steering: float = strategy.generateSteering()  # [rad]
+        speed: float = strategy.generateSpeed(steering=steering)  # [m/s]
+        points: int = strategy.generatePoints(speed=speed)
 
         result.append({
             'x': x,
@@ -46,43 +48,6 @@ def generateTrajectory(modelName: str, speed: float, number: int) -> list[object
     return result
 
 
-def modifyCoordinate(modelName: str, x: float, y: float, speed: float, yaw: float) -> tuple[float, float]:
-    if modelName in [ModelName.NORMAL.value, ModelName.PRACTICE.value]:
-        return x, y
-
-    if modelName == ModelName.AGGRESSIVE.value:
-        for _ in range(random.randint(10, 20)):
-            x += speed * math.cos(yaw) * Config.GENERATE_DURATION  # [m]
-            y += speed * math.sin(yaw) * Config.GENERATE_DURATION  # [m]
-
-        return x, y
-
-    raise NotImplementedError('Model not implemented')
-
-
-def generateSteering(modelName: str) -> float:
-    if modelName in [ModelName.NORMAL.value, ModelName.PRACTICE.value]:
-        return math.radians(float(random.randint(-45, 45)))
-
-    if modelName == ModelName.AGGRESSIVE.value:
-        return math.radians(random.choice([
-            float(random.randint(-45, -35)),
-            float(random.randint(35, 45)),
-        ]))
-
-    raise NotImplementedError('Model not implemented')
-
-
-def generatePoints(modelName: str) -> int:
-    if modelName in [ModelName.NORMAL.value, ModelName.PRACTICE.value]:
-        return random.randint(10, 40)
-
-    if modelName == ModelName.AGGRESSIVE.value:
-        return random.randint(10, 20)
-
-    raise NotImplementedError('Model not implemented')
-
-
 def saveTrajectory(path: str, trajectory: list[object]) -> None:
     with open(path, 'w') as file:
         file.write(json.dumps(trajectory))
@@ -91,7 +56,6 @@ def saveTrajectory(path: str, trajectory: list[object]) -> None:
 
 def main() -> None:
     args: any = parseArgs()
-    speed: float = args.speed
     number: int = args.number
     modelName: str = args.model
     modelDirectory: str = 'model/' + modelName + '/'
@@ -99,10 +63,10 @@ def main() -> None:
 
     print('---Running ' + os.path.basename(__file__) + '---')
     print('Model file: ' + modelFile)
-    print('Speed: ' + str(speed))
     print('Number: ' + str(number))
 
-    trajectory: list[object] = generateTrajectory(modelName=modelName, speed=speed, number=number)
+    strategy: StrategyInterface = StrategyResolver().resolve(modelName=modelName)
+    trajectory: list[object] = generateTrajectory(strategy=strategy, number=number)
     createDirectory(directory=modelDirectory)
     saveTrajectory(path=modelFile, trajectory=trajectory)
 

@@ -2,6 +2,7 @@ import pickle
 import tensorflow as tf
 from keras.models import model_from_json, Sequential
 from sklearn.preprocessing import MinMaxScaler
+from components.config.Config import Config
 from components.coordinate.CoordinateTransformer import CoordinateTransformer
 from components.command.Command import Command
 from components.part.Part import Part
@@ -28,8 +29,8 @@ class PredictService:
         speed: float = self.__doPredict(part, modelDirectory + 'speed/')
 
         return Command(
-            steering=max(-45.0, min(45.0, steering)),
-            speed=speed,
+            steering=max(Config.MIN_STEERING, min(Config.MAX_STEERING, steering)),
+            speed=min(speed, Config.MAX_SPEED),
         )
 
     def __doPredict(self, part: Part, modelDirectory: str) -> float:
