@@ -1,6 +1,6 @@
 import pickle
 import tensorflow as tf
-from keras.models import model_from_json, Sequential
+from tf_keras.models import model_from_json, Sequential
 from sklearn.preprocessing import MinMaxScaler
 from components.config.Config import Config
 from components.coordinate.CoordinateTransformer import CoordinateTransformer

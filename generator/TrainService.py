@@ -2,12 +2,11 @@ import os
 import json
 import pickle
 import visualkeras
-import tensorflow as tf
 from datetime import datetime
 from collections.abc import Iterable
-from keras.models import Sequential
-from keras.utils import plot_model
-from keras.callbacks import EarlyStopping
+from tf_keras.models import Sequential
+from tf_keras.utils import plot_model
+from tf_keras.callbacks import EarlyStopping, TensorBoard
 from keras_visualizer import visualizer
 from sklearn.preprocessing import MinMaxScaler
 from components.command.Command import Command
@@ -40,7 +39,7 @@ class TrainService:
 
     def __trainModel(self, trainX: list[list[float]], trainY: list[list[float]], modelDirectory: str) -> None:
         tensorboardDir: str = 'tensorboard/' + modelDirectory + datetime.now().strftime('%Y-%m-%d_%H:%M:%S.%f')
-        tensorboardCallback: any = tf.keras.callbacks.TensorBoard(log_dir=tensorboardDir, histogram_freq=1)
+        tensorboardCallback: TensorBoard = TensorBoard(log_dir=tensorboardDir, histogram_freq=1)
         earlyStopping: EarlyStopping = EarlyStopping(patience=3)
 
         xScaler: MinMaxScaler = MinMaxScaler()

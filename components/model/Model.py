@@ -1,5 +1,5 @@
-from keras.models import Sequential
-from keras.layers import Dense
+from tf_keras.models import Sequential
+from tf_keras.layers import Dense
 
 
 class Model:
