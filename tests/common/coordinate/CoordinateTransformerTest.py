@@ -25,26 +25,34 @@ class coordinateTransformerTest(unittest.TestCase):
         self.assertEqual([], actual)
 
         actual: list[list[Coordinate]] = self.coordinateTransformer.splitInfoFragments([
-            Coordinate(1.2, 3.4),
+            Coordinate(x=1.2, y=3.4),
         ])
         self.assertEqual([], actual)
 
         actual: list[list[Coordinate]] = self.coordinateTransformer.splitInfoFragments([
-            Coordinate(1.2, 3.4),
-            Coordinate(5.6, 7.8),
+            Coordinate(x=1.2, y=3.4),
+            Coordinate(x=5.6, y=7.8),
+        ])
+        self.assertEqual([], actual)
+
+        actual: list[list[Coordinate]] = self.coordinateTransformer.splitInfoFragments([
+            Coordinate(x=1.2, y=3.4),
+            Coordinate(x=5.6, y=7.8),
+            Coordinate(x=9.10, y=11.12),
         ])
         self.assertEqual([
-            [Coordinate(1.2, 3.4), Coordinate(5.6, 7.8)]
+            [Coordinate(x=1.2, y=3.4), Coordinate(x=5.6, y=7.8), Coordinate(x=9.10, y=11.12)],
         ], actual)
 
         actual: list[list[Coordinate]] = self.coordinateTransformer.splitInfoFragments([
-            Coordinate(1.2, 3.4),
-            Coordinate(5.6, 7.8),
-            Coordinate(9.10, 11.12),
+            Coordinate(x=1.2, y=3.4),
+            Coordinate(x=5.6, y=7.8),
+            Coordinate(x=9.10, y=11.12),
+            Coordinate(x=13.14, y=15.16),
         ])
         self.assertEqual([
-            [Coordinate(1.2, 3.4), Coordinate(5.6, 7.8)],
-            [Coordinate(5.6, 7.8), Coordinate(9.10, 11.12)]
+            [Coordinate(x=1.2, y=3.4), Coordinate(x=5.6, y=7.8), Coordinate(x=9.10, y=11.12)],
+            [Coordinate(x=5.6, y=7.8), Coordinate(x=9.10, y=11.12), Coordinate(x=13.14, y=15.16)],
         ], actual)
 
     def testAddFictionalCoordinates(self) -> None:

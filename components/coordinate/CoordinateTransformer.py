@@ -14,13 +14,13 @@ class CoordinateTransformer:
 
     def splitInfoFragments(self, coordinates: list[Coordinate]) -> list[list[Coordinate]]:
         fragments: list[list[Coordinate]] = []
-        stop: int = len(coordinates)
 
-        for i in range(0, stop, 1):
+        for i in range(len(coordinates)):
             try:
                 fragments.append([
                     coordinates[i],
                     coordinates[i + 1],
+                    coordinates[i + 2],
                 ])
             except IndexError:
                 continue

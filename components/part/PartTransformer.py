@@ -15,10 +15,15 @@ class PartTransformer:
         if coordinates[0].y != 0.0:
             raise ValueError('First y coordinate must be 0')
 
-        return [
-            coordinates[0].x,
-            part.yaw,
-        ]
+        result: list[float] = [coordinates[0].x]
+
+        for i in range(1, len(coordinates)):
+            result.append(coordinates[i].x)
+            result.append(coordinates[i].y)
+
+        result.append(part.yaw)
+
+        return result
 
     def normalizeToZero(self, part: Part) -> Part:
         coordinates: list[Coordinate] = part.coordinates

@@ -33,11 +33,29 @@ class PartTransformerTest(unittest.TestCase):
         actual: list[float] = self.partTransformer.presentForInput(Part(
             coordinates=[
                 Coordinate(x=1.2, y=0.0),
+            ],
+            yaw=3.4,
+        ))
+        self.assertEqual([1.2, 3.4], actual)
+
+        actual: list[float] = self.partTransformer.presentForInput(Part(
+            coordinates=[
+                Coordinate(x=1.2, y=0.0),
                 Coordinate(x=5.6, y=7.8),
             ],
             yaw=9.10,
         ))
-        self.assertEqual([1.2, 9.10], actual)
+        self.assertEqual([1.2, 5.6, 7.8, 9.10], actual)
+
+        actual: list[float] = self.partTransformer.presentForInput(Part(
+            coordinates=[
+                Coordinate(x=1.2, y=0.0),
+                Coordinate(x=5.6, y=7.8),
+                Coordinate(x=9.10, y=11.12),
+            ],
+            yaw=13.14,
+        ))
+        self.assertEqual([1.2, 5.6, 7.8, 9.10, 11.12, 13.14], actual)
 
     def testNormalizeToZero(self) -> None:
         with self.assertRaises(ValueError):
