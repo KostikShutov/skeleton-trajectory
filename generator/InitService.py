@@ -12,6 +12,7 @@ class InitService:
             return []
 
         result: list[list[object]] = []
+        course: list[Coordinate] = self.coordinateTransformer.addFictionalCoordinate(coordinates=course)
         fragments: list[list[Coordinate]] = self.coordinateTransformer.splitInfoFragments(coordinates=course)
 
         for fragment in fragments:

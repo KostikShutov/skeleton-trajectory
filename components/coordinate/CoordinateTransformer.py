@@ -27,23 +27,16 @@ class CoordinateTransformer:
 
         return fragments
 
-    def addFictionalCoordinates(self, coordinates: list[Coordinate], count: int) -> list[Coordinate]:
-        if count <= 0:
-            return []
-
+    def addFictionalCoordinate(self, coordinates: list[Coordinate]) -> list[Coordinate]:
         try:
             last: Coordinate = coordinates[-1]
             prev: Coordinate = coordinates[-2]
         except IndexError:
             return []
 
-        dx = last.x - prev.x
-        dy = last.y - prev.y
-
-        for _ in range(count):
-            coordinates.append(Coordinate(
-                x=coordinates[-1].x + dx,
-                y=coordinates[-1].y + dy,
-            ))
+        coordinates.append(Coordinate(
+            x=2 * last.x - prev.x,
+            y=2 * last.y - prev.y,
+        ))
 
         return coordinates

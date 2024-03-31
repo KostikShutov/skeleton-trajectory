@@ -55,31 +55,23 @@ class coordinateTransformerTest(unittest.TestCase):
             [Coordinate(x=5.6, y=7.8), Coordinate(x=9.10, y=11.12), Coordinate(x=13.14, y=15.16)],
         ], actual)
 
-    def testAddFictionalCoordinates(self) -> None:
-        actual: list[Coordinate] = self.coordinateTransformer.addFictionalCoordinates([], 3)
+    def testAddFictionalCoordinate(self) -> None:
+        actual: list[Coordinate] = self.coordinateTransformer.addFictionalCoordinate([])
         self.assertEqual([], actual)
 
-        actual: list[Coordinate] = self.coordinateTransformer.addFictionalCoordinates([
+        actual: list[Coordinate] = self.coordinateTransformer.addFictionalCoordinate([
             Coordinate(x=1.2, y=3.4),
-        ], 3)
+        ])
         self.assertEqual([], actual)
 
-        actual: list[Coordinate] = self.coordinateTransformer.addFictionalCoordinates([
-            Coordinate(x=1.2, y=3.4),
-            Coordinate(x=5.6, y=7.8),
-        ], 0)
-        self.assertEqual([], actual)
-
-        actual: list[Coordinate] = self.coordinateTransformer.addFictionalCoordinates([
+        actual: list[Coordinate] = self.coordinateTransformer.addFictionalCoordinate([
             Coordinate(x=1.2, y=3.4),
             Coordinate(x=5.6, y=7.8),
-        ], 3)
+        ])
         self.assertEqual([
             Coordinate(x=1.2, y=3.4),
             Coordinate(x=5.6, y=7.8),
             Coordinate(x=10.0, y=12.2),
-            Coordinate(x=14.4, y=16.6),
-            Coordinate(x=18.8, y=21.0),
         ], actual)
 
 
