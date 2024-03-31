@@ -18,10 +18,6 @@ def removeFirst(items: list) -> list:
     return items
 
 
-def strToBool(value: str) -> bool:
-    return value.lower() in ['true', '1']
-
-
 def parseArgs() -> any:
     parser = argparse.ArgumentParser()
     parser.add_argument('-m', '--model', type=str, default=ModelName.NORMAL.value)
