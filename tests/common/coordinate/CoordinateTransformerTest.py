@@ -7,19 +7,6 @@ class coordinateTransformerTest(unittest.TestCase):
     def setUp(self) -> None:
         self.coordinateTransformer = CoordinateTransformer()
 
-    def testSeparateToXYLists(self) -> None:
-        actual: tuple[list[float], list[float]] = self.coordinateTransformer.separateToXYLists([])
-        self.assertEqual(([], []), actual)
-
-        actual: tuple[list[float], list[float]] = self.coordinateTransformer.separateToXYLists([
-            Coordinate(x=1.2, y=3.4),
-            Coordinate(x=11.12, y=13.14),
-        ])
-        self.assertEqual((
-            [1.2, 11.12],
-            [3.4, 13.14],
-        ), actual)
-
     def testSplitInfoFragments(self) -> None:
         actual: list[list[Coordinate]] = self.coordinateTransformer.splitInfoFragments([])
         self.assertEqual([], actual)

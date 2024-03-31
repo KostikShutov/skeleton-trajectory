@@ -2,16 +2,6 @@ from components.coordinate.Coordinate import Coordinate
 
 
 class CoordinateTransformer:
-    def separateToXYLists(self, coordinates: list[Coordinate]) -> tuple[list[float], list[float]]:
-        x: list[float] = []
-        y: list[float] = []
-
-        for coordinate in coordinates:
-            x.append(coordinate.x)
-            y.append(coordinate.y)
-
-        return x, y
-
     def splitInfoFragments(self, coordinates: list[Coordinate]) -> list[list[Coordinate]]:
         fragments: list[list[Coordinate]] = []
 
