@@ -30,7 +30,7 @@ class PredictService:
 
         return Command(
             steering=max(Config.MIN_STEERING, min(Config.MAX_STEERING, steering)),
-            speed=min(speed, Config.MAX_SPEED),
+            speed=max(Config.MIN_SPEED, min(speed, Config.MAX_SPEED)),
         )
 
     def __doPredict(self, part: Part, modelDirectory: str) -> float:
