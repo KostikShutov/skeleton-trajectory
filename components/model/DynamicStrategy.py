@@ -4,7 +4,7 @@ from components.config.Config import Config
 from components.model.StrategyInterface import StrategyInterface
 
 
-class PracticeStrategy(StrategyInterface):
+class DynamicStrategy(StrategyInterface):
     def modifyCoordinate(self, x: float, y: float, yaw: float, speed: float) -> tuple[float, float]:
         return x, y
 
