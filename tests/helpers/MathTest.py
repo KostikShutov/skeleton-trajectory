@@ -1,7 +1,7 @@
 import math
 import unittest
 from components.coordinate.Coordinate import Coordinate
-from helpers.Math import distanceBetweenPoints, rotatePoints, normalizeAngle
+from helpers.Math import distanceBetweenPoints, angleBetweenVectorAndX, rotatePoints, normalizeAngle
 
 
 class MathTest(unittest.TestCase):
@@ -26,6 +26,13 @@ class MathTest(unittest.TestCase):
             Coordinate(x=2, y=2),
         ])
         self.assertEqual(3.23606797749979, actual)
+
+    def testAngleBetweenVectorAndX(self) -> None:
+        actual: float = angleBetweenVectorAndX(
+            first=Coordinate(x=5, y=6),
+            second=Coordinate(x=7, y=8),
+        )
+        self.assertEqual(0.7853981633974483, actual)
 
     def testRotatePoints(self) -> None:
         with self.assertRaises(ValueError):

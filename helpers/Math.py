@@ -13,6 +13,13 @@ def distanceBetweenPoints(coordinates: list[Coordinate]) -> float:
     return distance
 
 
+def angleBetweenVectorAndX(first: Coordinate, second: Coordinate) -> float:
+    return math.atan2(
+        second.y - first.y,
+        second.x - first.x,
+    )
+
+
 def rotatePoints(coordinates: list[Coordinate]) -> tuple[list[Coordinate], float]:
     if len(coordinates) <= 1:
         raise ValueError('Must provide >= 2 coordinates')
@@ -20,7 +27,7 @@ def rotatePoints(coordinates: list[Coordinate]) -> tuple[list[Coordinate], float
     if coordinates[0].x != 0.0 and coordinates[0].y != 0.0:
         raise ValueError('First coordinate must be (0, 0)')
 
-    angle: float = math.atan2(coordinates[1].y, coordinates[1].x)  # [rad]
+    angle: float = angleBetweenVectorAndX(coordinates[0], coordinates[1])  # [rad]
     angle: float = -angle  # [rad]
     result: list[Coordinate] = []
 

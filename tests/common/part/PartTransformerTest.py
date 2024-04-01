@@ -9,19 +9,23 @@ class PartTransformerTest(unittest.TestCase):
         self.partTransformer = PartTransformer()
 
     def testPresentForInput(self) -> None:
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ValueError) as context:
             self.partTransformer.presentForInput(Part(
                 coordinates=[],
                 yaw=44.9,
             ))
 
-        with self.assertRaises(ValueError):
+        self.assertTrue('Must provide 2 coordinates' in str(context.exception))
+
+        with self.assertRaises(ValueError) as context:
             self.partTransformer.presentForInput(Part(
                 coordinates=[Coordinate(x=1.2, y=3.4)],
                 yaw=44.9,
             ))
 
-        with self.assertRaises(ValueError):
+        self.assertTrue('Must provide 2 coordinates' in str(context.exception))
+
+        with self.assertRaises(ValueError) as context:
             self.partTransformer.presentForInput(Part(
                 coordinates=[
                     Coordinate(x=1.2, y=3.4),
@@ -30,13 +34,19 @@ class PartTransformerTest(unittest.TestCase):
                 yaw=44.9,
             ))
 
-        actual: list[float] = self.partTransformer.presentForInput(Part(
-            coordinates=[
-                Coordinate(x=1.2, y=0.0),
-            ],
-            yaw=3.4,
-        ))
-        self.assertEqual([1.2, 3.4], actual)
+        self.assertTrue('First y coordinate must be 0' in str(context.exception))
+
+        with self.assertRaises(ValueError) as context:
+            self.partTransformer.presentForInput(Part(
+                coordinates=[
+                    Coordinate(x=1.2, y=0.0),
+                    Coordinate(x=5.6, y=7.8),
+                    Coordinate(x=9.10, y=11.12),
+                ],
+                yaw=13.14,
+            ))
+
+        self.assertTrue('Must provide 2 coordinates' in str(context.exception))
 
         actual: list[float] = self.partTransformer.presentForInput(Part(
             coordinates=[
@@ -45,17 +55,7 @@ class PartTransformerTest(unittest.TestCase):
             ],
             yaw=9.10,
         ))
-        self.assertEqual([1.2, 5.6, 7.8, 9.10], actual)
-
-        actual: list[float] = self.partTransformer.presentForInput(Part(
-            coordinates=[
-                Coordinate(x=1.2, y=0.0),
-                Coordinate(x=5.6, y=7.8),
-                Coordinate(x=9.10, y=11.12),
-            ],
-            yaw=13.14,
-        ))
-        self.assertEqual([1.2, 5.6, 7.8, 9.10, 11.12, 13.14], actual)
+        self.assertEqual([1.2, 8.9554452709, 60.5725435968, 9.10], actual)
 
     def testNormalizeToZero(self) -> None:
         with self.assertRaises(ValueError):
