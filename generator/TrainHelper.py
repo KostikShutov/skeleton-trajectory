@@ -40,17 +40,7 @@ class TrainHelper:
 
         return result
 
-    def presentCombinedItems(self, items: list) -> tuple[list[list[float]], list[list[float]]]:
-        trainX: list[list[float]] = []
-        trainY: list[list[float]] = []
-
-        for part, command in tqdm(items, desc='Presenting training items'):
-            trainX.append(self.partTransformer.presentForInput(part))
-            trainY.append(self.commandTransformer.presentForOutput(command))
-
-        return trainX, trainY
-
-    def presentSeparatedItems(self, items: list) -> tuple[list[list[float]], list[list[float]], list[list[float]]]:
+    def presentItems(self, items: list) -> tuple[list[list[float]], list[list[float]], list[list[float]]]:
         trainX: list[list[float]] = []
         trainSteeringY: list[list[float]] = []
         trainSpeedY: list[list[float]] = []

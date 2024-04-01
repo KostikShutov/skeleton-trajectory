@@ -32,7 +32,7 @@ class TrainService:
 
         course: list[Coordinate] = self.coordinateParser.parse(course)
         items: list[tuple[Part, Command]] = self.trainHelper.createItems(course)
-        trainX, trainSteeringY, trainSpeedY = self.trainHelper.presentSeparatedItems(items)
+        trainX, trainSteeringY, trainSpeedY = self.trainHelper.presentItems(items)
 
         self.__trainModel(trainX, trainSteeringY, modelDirectory + 'steering/')
         self.__trainModel(trainX, trainSpeedY, modelDirectory + 'speed/')
