@@ -60,11 +60,24 @@ def addPredictedPlot(path: str) -> None:
 
     plt.plot(predictedPointsX, predictedPointsY, marker='o', markersize=1, color='red')
 
+    for i, item in enumerate(items):
+        x = item['x']
+        y = item['y']
+
+        try:
+            speed = round(item['speed'], 2)
+        except KeyError:
+            return
+
+        if i % 80 == 0:
+            plt.text(x, y, f'{speed} m/s', fontsize=10, color='black')
+
 
 def showPlot() -> None:
     plt.xlabel('X')
     plt.ylabel('Y')
     plt.grid(True)
+    plt.axis('equal')
     plt.show()
 
 
