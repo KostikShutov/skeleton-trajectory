@@ -146,10 +146,6 @@ paths:
                   speed:
                     type: number
                     format: float
-                  duration:
-                    type: number
-                    format: float
               example:
-                steering: -50.77
-                speed: 0.86
-                duration: 1.0
+                steering: -33.81
+                speed: 15
