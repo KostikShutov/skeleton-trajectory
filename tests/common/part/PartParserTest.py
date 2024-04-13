@@ -20,7 +20,7 @@ class PartParserTest(unittest.TestCase):
             coordinates=[],
             yaw=33.5,
         ), actualPart)
-        self.assertEqual('normal', actualModelName)
+        self.assertEqual('static_smoothly', actualModelName)
 
         actualPart, actualModelName = self.partParser.parse({
             'coordinates': [
@@ -28,7 +28,7 @@ class PartParserTest(unittest.TestCase):
                 {'x': 5.6, 'y': 7.8},
             ],
             'yaw': 33.5,
-            'model': 'aggressive',
+            'model': 'static_aggressive',
         })
         self.assertEqual(Part(
             coordinates=[
@@ -37,4 +37,4 @@ class PartParserTest(unittest.TestCase):
             ],
             yaw=33.5,
         ), actualPart)
-        self.assertEqual('aggressive', actualModelName)
+        self.assertEqual('static_aggressive', actualModelName)

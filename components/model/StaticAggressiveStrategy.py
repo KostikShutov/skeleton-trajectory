@@ -4,7 +4,7 @@ from components.config.Config import Config
 from components.model.StrategyInterface import StrategyInterface
 
 
-class AggressiveStrategy(StrategyInterface):
+class StaticAggressiveStrategy(StrategyInterface):
     def modifyCoordinate(self, x: float, y: float, yaw: float, speed: float) -> tuple[float, float]:
         for _ in range(random.randint(10, 20)):
             x += speed * math.cos(yaw) * Config.DURATION  # [m]

@@ -13,6 +13,6 @@ class PartParser:
             yaw=float(data['yaw']),
         )
 
-        modelName: ModelName = ModelName(str(data['model'])) if 'model' in data else ModelName.NORMAL
+        modelName: ModelName = ModelName(str(data['model'])) if 'model' in data else ModelName.STATIC_SMOOTHLY
 
         return part, modelName.value

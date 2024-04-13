@@ -3,6 +3,7 @@ import math
 import json
 from tqdm import tqdm
 from components.config.Config import Config
+from components.model.ModelName import ModelName
 from components.model.StrategyInterface import StrategyInterface
 from components.model.StrategyResolver import StrategyResolver
 from helpers.Utility import createDirectory, parseArgs
@@ -65,7 +66,7 @@ def main() -> None:
     print('Model file: ' + modelFile)
     print('Number: ' + str(number))
 
-    strategy: StrategyInterface = StrategyResolver().resolve(modelName=modelName)
+    strategy: StrategyInterface = StrategyResolver().resolve(modelName=ModelName(modelName))
     trajectory: list[object] = generateTrajectory(strategy=strategy, number=number)
     createDirectory(directory=modelDirectory)
     saveTrajectory(path=modelFile, trajectory=trajectory)
