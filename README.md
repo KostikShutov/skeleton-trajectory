@@ -66,14 +66,16 @@ make tests
 
 ## Скрипты
 
-Сгенерировать траекторию в [model/default/train.json](model/default/train.json):
+Сгенерировать траекторию в [model/\*/train.json](model):
 
 ```bash
 python scripts/generate-trajectory.py
+python scripts/generate-trajectory.py -m speed_dynamic
 ```
 
-Запустить симуляцию траектории из [model/default/train.json](model/default/train.json):
+Запустить симуляцию траектории из [model/\*/\*.json](model):
 
 ```bash
 python scripts/simulate-trajectory.py
+python scripts/simulate-trajectory.py -m speed_dynamic -f squa-2
 ```
