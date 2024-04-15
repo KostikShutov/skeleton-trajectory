@@ -2,6 +2,7 @@ import os
 import json
 import matplotlib.pyplot as plt
 from collections.abc import Iterable
+from components.config.Config import Config
 from components.coordinate.Coordinate import Coordinate
 from helpers.Utility import parseArgs
 from json.decoder import JSONDecodeError
@@ -40,14 +41,15 @@ def addRealPlot(path: str) -> None:
     plt.plot(pointsX, pointsY, marker='o', markersize=10, color='blue', linestyle='')
 
 
-def addPredictedPlot(path: str) -> None:
+def addPredictedPlot(path: str, warm: bool) -> None:
     items: Iterable | None = loadItems(path)
 
     if items is None:
         return
 
-    predictedPointsX: list[float] = []
-    predictedPointsY: list[float] = []
+    pointsX: list[float] = []
+    pointsY: list[float] = []
+    speed: list[float] = []
 
     for item in items:
         coordinate: Coordinate = Coordinate(
@@ -55,10 +57,28 @@ def addPredictedPlot(path: str) -> None:
             y=item['y'],
         )
 
-        predictedPointsX.append(coordinate.x)
-        predictedPointsY.append(coordinate.y)
+        pointsX.append(coordinate.x)
+        pointsY.append(coordinate.y)
+        currentSpeed: float = item['speed']
 
-    plt.plot(predictedPointsX, predictedPointsY, marker='o', markersize=1, color='red')
+        if warm and len(speed) > 0:
+            lastSpeed: float = speed[-1]
+
+            if currentSpeed != lastSpeed:
+                count: int = 50
+                delta: float = (currentSpeed - lastSpeed) / count
+
+                for i in range(1, count):
+                    speed[-i] = currentSpeed - i * delta
+
+        speed.append(currentSpeed)
+
+    if warm:
+        plt.scatter(pointsX, pointsY, c=speed, cmap='Wistia', s=15, vmin=Config.MIN_SPEED, vmax=Config.MAX_SPEED)
+        plt.plot(pointsX, pointsY, c='black', alpha=0.3)
+        plt.colorbar(label='Скорость')
+    else:
+        plt.plot(pointsX, pointsY, marker='o', markersize=1, color='red')
 
     for i, item in enumerate(items):
         x = item['x']
@@ -86,13 +106,15 @@ def main() -> None:
     modelDirectory: str = 'model/' + args.model + '/'
     realModelFile: str = modelDirectory + args.file + '.json'
     predictedModelFile: str = modelDirectory + args.file + '.predict.json'
+    warm: bool = bool(args.warm)
 
     print('---Running ' + os.path.basename(__file__) + '---')
     print('Real model file: ' + realModelFile)
     print('Predicted model file: ' + predictedModelFile)
+    print('Warm: ' + str(warm))
 
     addRealPlot(path=realModelFile)
-    addPredictedPlot(path=predictedModelFile)
+    addPredictedPlot(path=predictedModelFile, warm=warm)
     showPlot()
 
 

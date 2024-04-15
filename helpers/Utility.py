@@ -25,5 +25,6 @@ def parseArgs() -> any:
     parser.add_argument('-n', '--number', type=int, default=1_000_000)
     parser.add_argument('-d', '--distance', type=int, default=1)
     parser.add_argument('-p', '--points', type=int, default=2)
+    parser.add_argument('-w', '--warm', type=bool, nargs='?', const=True)
 
     return parser.parse_args()
