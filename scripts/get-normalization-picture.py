@@ -86,12 +86,12 @@ def remove(normalized: list[Coordinate], subplot: any) -> None:
 
 
 def main() -> None:
-    fig, axs = plt.subplots(nrows=2, ncols=2, sharex=True, sharey=True)
+    fig, axs = plt.subplots(nrows=1, ncols=4, sharex=True, sharey=True)
 
-    coordinates: list[Coordinate] = init(subplot=axs[0, 0])
-    coordinates: list[Coordinate] = move(coordinates=coordinates, subplot=axs[0, 1])
-    coordinates: list[Coordinate] = rotate(normalized=coordinates, subplot=axs[1, 0])
-    remove(normalized=coordinates, subplot=axs[1, 1])
+    coordinates: list[Coordinate] = init(subplot=axs[0])
+    coordinates: list[Coordinate] = move(coordinates=coordinates, subplot=axs[1])
+    coordinates: list[Coordinate] = rotate(normalized=coordinates, subplot=axs[2])
+    remove(normalized=coordinates, subplot=axs[3])
 
     plt.show()
 
