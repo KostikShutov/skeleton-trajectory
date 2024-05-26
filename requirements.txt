@@ -14,3 +14,4 @@ Pillow==9.5.0
 python-dotenv==1.0.1
 tqdm==4.66.4
 visualkeras @ git+https://github.com/paulgavrikov/visualkeras@master
+pandas==2.2.2
