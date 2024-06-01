@@ -6,6 +6,15 @@ from components.model.StrategyInterface import StrategyInterface
 
 class SpeedWeeklyStrategy(StrategyInterface):
     def modifyCoordinate(self, x: float, y: float, yaw: float, speed: float) -> tuple[float, float]:
+        if speed <= 0.35:
+            return x, y
+
+        points: int = random.randint(35, 55)
+
+        for _ in range(points):
+            x += speed * math.cos(yaw) * Config.DURATION  # [m]
+            y += speed * math.sin(yaw) * Config.DURATION  # [m]
+
         return x, y
 
     def generateSteering(self) -> float:
@@ -24,13 +33,13 @@ class SpeedWeeklyStrategy(StrategyInterface):
         if 20.0 < steering <= 30.0:
             return 0.35
 
-        if 10.0 < steering <= 20.0:
-            return 0.4
-
-        if 5.0 < steering <= 10.0:
+        if 5.0 < steering <= 20.0:
             return 0.45
 
         return Config.MAX_SPEED
 
     def generatePoints(self, speed: float) -> int:
-        return round((Config.MAX_SPEED / speed) * random.randint(10, 40))
+        if speed <= 0.35:
+            return random.randint(20, 30)
+
+        return 5
