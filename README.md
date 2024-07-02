@@ -1,10 +1,10 @@
-# skeleton-generator
+# skeleton-autonomous
 
 ## Другие компоненты общей системы
 
-[Raspberry server](https://github.com/KostikShutov/skeleton-server)
+[Car control](https://github.com/KostikShutov/skeleton-car)
 
-[Webview for server](https://github.com/KostikShutov/skeleton-webview)
+[Webview for car control](https://github.com/KostikShutov/skeleton-webview)
 
 ## Docker
 
