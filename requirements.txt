@@ -1,4 +1,4 @@
-tensorflow==2.16.1
+tensorflow==2.16.2
 tensorboard==2.16.2
 tf-keras==2.16.0
 scikit-learn==1.5.0
@@ -9,7 +9,7 @@ matplotlib==3.9.0
 pydot==2.0.0
 pydotplus==2.0.2
 keras_visualizer @ git+https://github.com/KostikShutov/keras-visualizer@master
-cvxpy==1.5.1
+cvxpy==1.5.2
 Pillow==9.5.0
 python-dotenv==1.0.1
 tqdm==4.66.4
