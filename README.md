@@ -37,7 +37,7 @@ make d-python
 Поднять сервер (<http://localhost:3001>):
 
 ```bash
-make generator
+make server
 ```
 
 Запустить обучение нейронной сети:
@@ -50,12 +50,6 @@ make train
 
 ```bash
 make tensorboard
-```
-
-Очистить папку с логами:
-
-```bash
-make clear
 ```
 
 Запустить тесты:

@@ -1,8 +1,8 @@
 services:
-  python-generator:
+  python-trajectory:
     build: .
-    image: python-generator
-    container_name: python-generator-container
+    image: python-trajectory
+    container_name: python-trajectory-container
     tty: true
     privileged: true
     volumes:
