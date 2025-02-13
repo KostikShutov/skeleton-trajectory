@@ -1,17 +1,17 @@
-tensorflow==2.16.2
-tensorboard==2.16.2
-tf-keras==2.16.0
-scikit-learn==1.5.0
-flask==3.0.3
-flask-cors==4.0.1
+tensorflow==2.18.0
+tensorboard==2.18.0
+tf-keras==2.18.0
+scikit-learn==1.6.1
+flask==3.1.0
+flask-cors==5.0.0
 numpy==1.26.4
-matplotlib==3.9.0
-pydot==2.0.0
+matplotlib==3.10.0
+pydot==3.0.4
 pydotplus==2.0.2
 keras_visualizer @ git+https://github.com/KostikShutov/keras-visualizer@master
-cvxpy==1.5.2
+cvxpy==1.6.0
 Pillow==9.5.0
 python-dotenv==1.0.1
-tqdm==4.66.4
+tqdm==4.67.1
 visualkeras @ git+https://github.com/paulgavrikov/visualkeras@master
-pandas==2.2.2
+pandas==2.2.3
